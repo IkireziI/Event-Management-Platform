@@ -1,16 +1,15 @@
-import React from "react";
-import axios from "axios";
+import React from 'react';
+import axios from 'axios';
 
-const API_ENDPOINT = "http://127.0.0.1:5000/events";
+const API_ENDPOINT = 'http://localhost:5000/events';
 
-function EventCard({ event }) {
+function EventCard({ event, setEditingEvent }) {
   const handleDelete = () => {
-    axios
-      .delete(`${API_ENDPOINT}/${event._id}`)
+    axios.delete(`${API_ENDPOINT}/${event._id}`)
       .then(() => {
         window.location.reload(); // Refresh after deletion
       })
-      .catch((error) => console.error("Error deleting event:", error));
+      .catch(error => console.error('Error deleting event:', error));
   };
 
   return (
@@ -19,12 +18,11 @@ function EventCard({ event }) {
         <div className="card-body">
           <h5 className="card-title">{event.title}</h5>
           <p className="card-text">{event.description}</p>
-          <p className="card-text">
-            <small>{new Date(event.date).toLocaleDateString()}</small>
-          </p>
-          <button onClick={handleDelete} className="btn btn-danger">
-            Delete
-          </button>
+          <p className="card-text"><small>{new Date(event.date).toLocaleDateString()}</small></p>
+          <div className="d-flex justify-content-between">
+            <button onClick={() => setEditingEvent(event)} className="btn btn-secondary">Edit</button>
+            <button onClick={handleDelete} className="btn btn-danger">Delete</button>
+          </div>
         </div>
       </div>
     </div>

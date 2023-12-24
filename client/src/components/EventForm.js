@@ -1,23 +1,26 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const API_ENDPOINT = "http://127.0.0.1:5000/events";
+const API_ENDPOINT = 'http://localhost:5000/events';
 
-function EventForm({ eventToUpdate }) {
-  const [event, setEvent] = useState(
-    eventToUpdate || { title: "", description: "", date: "" }
-  );
+function EventForm({ eventToUpdate, clearEditing }) {
+  const [event, setEvent] = useState(eventToUpdate || { title: '', description: '', date: '' });
+
+  useEffect(() => {
+    setEvent(eventToUpdate || { title: '', description: '', date: '' });
+  }, [eventToUpdate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const method = event._id ? "put" : "post";
+    const method = event._id ? 'put' : 'post';
     const url = event._id ? `${API_ENDPOINT}/${event._id}` : API_ENDPOINT;
 
     axios[method](url, event)
       .then(() => {
+        clearEditing();
         window.location.reload(); // Refresh after submission
       })
-      .catch((error) => console.error("Error submitting event:", error));
+      .catch(error => console.error('Error submitting event:', error));
   };
 
   const handleChange = (e) => {
@@ -31,36 +34,17 @@ function EventForm({ eventToUpdate }) {
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Title:</label>
-            <input
-              type="text"
-              className="form-control"
-              name="title"
-              value={event.title}
-              onChange={handleChange}
-            />
+            <input type="text" className="form-control" name="title" value={event.title} onChange={handleChange} />
           </div>
           <div className="mb-3">
             <label className="form-label">Description:</label>
-            <textarea
-              className="form-control"
-              name="description"
-              value={event.description}
-              onChange={handleChange}
-            />
+            <textarea className="form-control" name="description" value={event.description} onChange={handleChange} />
           </div>
           <div className="mb-3">
             <label className="form-label">Date:</label>
-            <input
-              type="date"
-              className="form-control"
-              name="date"
-              value={event.date}
-              onChange={handleChange}
-            />
+            <input type="date" className="form-control" name="date" value={event.date} onChange={handleChange} />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+          <button type="submit" className="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
