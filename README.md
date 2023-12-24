@@ -22,18 +22,17 @@ Welcome to the Event Management Web App! This project is a simple web applicatio
 2. Navigate to the project directory:
 
    ```bash
-   cd event-management-app
+   cd eventMS
    ```
 
 3. Install dependencies for both the server and client:
 
    ```bash
-   # Install server dependencies
-   cd server
+   # Install main project dependencies
    npm install
 
    # Install client dependencies
-   cd ../client
+   cd client
    npm install
    ```
 
