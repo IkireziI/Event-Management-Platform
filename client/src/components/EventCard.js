@@ -1,12 +1,34 @@
-import React from 'react';
+import React from "react";
+import axios from "axios";
 
-const EventCard = ({ event }) => (
-  <div>
-    <h3>{event.title}</h3>
-    <p>{event.description}</p>
-    <p>Date: {new Date(event.date).toLocaleDateString()}</p>
-    {/* Add more details or actions as needed */}
-  </div>
-);
+const API_ENDPOINT = "http://127.0.0.1:5000/events";
+
+function EventCard({ event }) {
+  const handleDelete = () => {
+    axios
+      .delete(`${API_ENDPOINT}/${event._id}`)
+      .then(() => {
+        window.location.reload(); // Refresh after deletion
+      })
+      .catch((error) => console.error("Error deleting event:", error));
+  };
+
+  return (
+    <div className="col-md-4 mb-3">
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">{event.title}</h5>
+          <p className="card-text">{event.description}</p>
+          <p className="card-text">
+            <small>{new Date(event.date).toLocaleDateString()}</small>
+          </p>
+          <button onClick={handleDelete} className="btn btn-danger">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default EventCard;

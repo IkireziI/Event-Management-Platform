@@ -1,40 +1,70 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
-const EventForm = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
+const API_ENDPOINT = "http://127.0.0.1:5000/events";
 
-  const handleFormSubmit = async (e) => {
+function EventForm({ eventToUpdate }) {
+  const [event, setEvent] = useState(
+    eventToUpdate || { title: "", description: "", date: "" }
+  );
+
+  const handleSubmit = (e) => {
     e.preventDefault();
+    const method = event._id ? "put" : "post";
+    const url = event._id ? `${API_ENDPOINT}/${event._id}` : API_ENDPOINT;
 
-    try {
-      await axios.post('http://localhost:5000/events', { title, description, date });
-      alert('Event created successfully!');
-      // Optionally, you can reset the form fields here
-    } catch (error) {
-      console.error('Error creating event:', error);
-    }
+    axios[method](url, event)
+      .then(() => {
+        window.location.reload(); // Refresh after submission
+      })
+      .catch((error) => console.error("Error submitting event:", error));
+  };
+
+  const handleChange = (e) => {
+    setEvent({ ...event, [e.target.name]: e.target.value });
   };
 
   return (
-    <div>
-      <h2>Create Event</h2>
-      <form onSubmit={handleFormSubmit}>
-        <label>Title:</label>
-        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
-
-        <label>Description:</label>
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
-
-        <label>Date:</label>
-        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
-
-        <button type="submit">Create Event</button>
-      </form>
+    <div className="card mb-4">
+      <div className="card-header">Event Form</div>
+      <div className="card-body">
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Title:</label>
+            <input
+              type="text"
+              className="form-control"
+              name="title"
+              value={event.title}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Description:</label>
+            <textarea
+              className="form-control"
+              name="description"
+              value={event.description}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Date:</label>
+            <input
+              type="date"
+              className="form-control"
+              name="date"
+              value={event.date}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
-};
+}
 
 export default EventForm;

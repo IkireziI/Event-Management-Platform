@@ -50,7 +50,7 @@ Welcome to the Event Management Web App! This project is a simple web applicatio
    node server.js
    ```
 
-   The server will run on http://localhost:5000.
+   The server will run on http://127.0.0.1:5000.
 
 ## Client Setup
 
@@ -61,7 +61,7 @@ Welcome to the Event Management Web App! This project is a simple web applicatio
    npm start
    ```
 
-   The client will run on http://localhost:3000.
+   The client will run on http://127.0.0.1:3000.
 
 ## Contributing
 

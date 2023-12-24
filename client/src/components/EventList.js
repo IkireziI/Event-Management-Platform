@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import EventCard from "./EventCard";
+import axios from "axios";
 
-const EventList = () => {
+const API_ENDPOINT = "http://127.0.0.1:5000/events";
+
+function EventList() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/events')
-      .then(response => setEvents(response.data))
-      .catch(error => console.error('Error fetching events:', error));
+    axios
+      .get(API_ENDPOINT)
+      .then((response) => {
+        setEvents(response.data);
+      })
+      .catch((error) => console.error("Error fetching events:", error));
   }, []);
 
   return (
-    <div>
-      <h2>Events</h2>
-      <ul>
-        {events.map(event => (
-          <li key={event._id}>
-            {event.title} - {new Date(event.date).toLocaleDateString()}
-          </li>
-        ))}
-      </ul>
+    <div className="row">
+      {events.map((event) => (
+        <EventCard key={event._id} event={event} />
+      ))}
     </div>
   );
-};
+}
 
 export default EventList;

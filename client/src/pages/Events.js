@@ -1,12 +1,15 @@
-import React from 'react';
-import EventList from '../components/EventList';
-import EventForm from '../components/EventForm';
+import React from "react";
+import EventList from "../components/EventList";
+import EventForm from "../components/EventForm";
 
-const Events = () => (
-  <div>
-    <EventList />
-    <EventForm />
-  </div>
-);
+function Events() {
+  return (
+    <div>
+      <h2 className="text-center mb-4">Manage Events</h2>
+      <EventForm />
+      <EventList />
+    </div>
+  );
+}
 
 export default Events;
