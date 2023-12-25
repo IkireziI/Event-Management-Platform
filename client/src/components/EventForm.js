@@ -7,7 +7,13 @@ function EventForm({ eventToUpdate, clearEditing }) {
   const [event, setEvent] = useState(eventToUpdate || { title: '', description: '', date: '' });
 
   useEffect(() => {
-    setEvent(eventToUpdate || { title: '', description: '', date: '' });
+    // Check if eventToUpdate has a date and it's in the right format (YYYY-MM-DD)
+    if (eventToUpdate && eventToUpdate.date) {
+      const formattedDate = eventToUpdate.date.split('T')[0]; // Adjust this line according to your date format
+      setEvent({ ...eventToUpdate, date: formattedDate });
+    } else {
+      setEvent({ title: '', description: '', date: '' });
+    }
   }, [eventToUpdate]);
 
   const handleSubmit = (e) => {
