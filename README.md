@@ -2,7 +2,7 @@
 
 Welcome to the Event Management Web App! This project is a simple web application for managing events. It includes a backend server built with ExpressJS and MongoDB (Mongoose) for data storage, and a frontend client built with ReactJS.
 
-![image](https://github.com/blingyplus/eventMS/assets/113293972/308e17b8-ae1c-4911-aaf6-56f480b4f284)
+
 
 
 ## Getting Started
@@ -16,7 +16,7 @@ Welcome to the Event Management Web App! This project is a simple web applicatio
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/blingyplus/eventMS.git
+   git clone https://github.com/IkireziI/Event-Management-Platform.git
    ```
 
 2. Navigate to the project directory:
